@@ -20,7 +20,7 @@ root.render(
         <footer className="Footer">
           <small>
             This page was designed by Prinisha Jugwanth and is an{" "}
-            <a href="https://github.com/prinishajugwanth/Weather_project ">
+            <a href="https://github.com/prinishajugwanth/react-weather-app">
               open-source code
             </a>
           </small>
