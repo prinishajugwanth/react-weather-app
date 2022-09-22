@@ -1,12 +1,17 @@
 import "../css/TemperatureDetails.css";
 
-import TemperatureItems from "./TemperatureItems";
+import TemperatureItem from "./TemperatureItem";
+
+import React, { useState } from "react";
+import ListGroup from "react-bootstrap/ListGroup";
 
 import ReactAnimatedWeather from "react-animated-weather";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 export default function TemperatureDetails(props) {
+  let [unit, setUnit] = useState("°C");
+
   function iconFor(condition) {
     let knownConditions = {
       Smoke: "CLEAR_DAY",
@@ -31,33 +36,17 @@ export default function TemperatureDetails(props) {
   function convertToKmph(value) {
     return Math.round((value * 18) / 5);
   }
-  let details = [
-    {
-      description: "Minimum",
-      value: Math.round(props.currentConditions.main.temp_min),
-      unit: "°C",
-    },
-    {
-      description: "Maximum",
-      value: Math.round(props.currentConditions.main.temp_max),
-      unit: "°C",
-    },
-    {
-      description: "Humidity",
-      value: props.currentConditions.main.humidity,
-      unit: "%",
-    },
-    {
-      description: "Pressure",
-      value: props.currentConditions.main.pressure,
-      unit: "hPa",
-    },
-    {
-      description: "Wind Speed",
-      value: convertToKmph(props.currentConditions.wind.speed),
-      unit: "km/h",
-    },
-  ];
+
+  function renderInUnit(event) {
+    setUnit(event.target.getAttribute("unit"));
+  }
+  function convertTempToSelectedUnit(value) {
+    if (unit === "°C") {
+      return Math.round(value);
+    } else {
+      return Math.round(value * (9 / 5) + 32);
+    }
+  }
 
   return (
     <>
@@ -78,14 +67,74 @@ export default function TemperatureDetails(props) {
                 animate={true}
               />
               <Card.Text>
-                Feels like {Math.round(props.currentConditions.main.feels_like)}
-                °C
+                Feels like{" "}
+                {convertTempToSelectedUnit(
+                  props.currentConditions.main.feels_like
+                )}{" "}
+                {unit}
               </Card.Text>
             </Card.Body>
-            <TemperatureItems items={details}></TemperatureItems>
+            <ListGroup className="list-group-flush">
+              <TemperatureItem
+                description="Temperature"
+                value={convertTempToSelectedUnit(
+                  props.currentConditions.main.temp
+                )}
+                unit={unit}
+                index="1"
+              ></TemperatureItem>
+              <TemperatureItem
+                description="Minimum"
+                value={convertTempToSelectedUnit(
+                  props.currentConditions.main.temp_min
+                )}
+                unit={unit}
+                index="2"
+              ></TemperatureItem>
+              <TemperatureItem
+                description="Maximum"
+                value={convertTempToSelectedUnit(
+                  props.currentConditions.main.temp_max
+                )}
+                unit={unit}
+                index="3"
+              ></TemperatureItem>
+              <TemperatureItem
+                description="Humidity"
+                value={Math.round(props.currentConditions.main.humidity)}
+                unit="%"
+                index="4"
+              ></TemperatureItem>
+              <TemperatureItem
+                description="Pressure"
+                value={Math.round(props.currentConditions.main.pressure)}
+                unit="hPa"
+                index="5"
+              ></TemperatureItem>
+              <TemperatureItem
+                description="Wind Speed"
+                value={convertToKmph(props.currentConditions.wind.speed)}
+                unit="km/h"
+                index="6"
+              ></TemperatureItem>
+            </ListGroup>
             <Card.Body>
-              <Card.Link href="#">Celsius</Card.Link>
-              <Card.Link href="#">Fahrenheit</Card.Link>
+              <Button
+                variant="secondary"
+                className="mt-2 mx-2"
+                onClick={renderInUnit}
+                unit="°C"
+              >
+                °C
+              </Button>
+              <Button
+                variant="secondary"
+                className="mt-2 mx-2"
+                onClick={renderInUnit}
+                unit="°F"
+              >
+                °F
+              </Button>
             </Card.Body>
           </Card>
           <Button variant="primary" className="mt-2">
