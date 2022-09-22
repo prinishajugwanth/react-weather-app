@@ -14,13 +14,15 @@ export default function Search() {
   let [longitude, setLongitude] = useState(0);
   let [cityname, setCityname] = useState("");
   let [currentWeatherConditions, setCurrentWeatherConditions] = useState();
-  let [loading, setLoading] = useState(false);
+  let [loadingGeo, setLoadingGeo] = useState(false);
+  let [loadingSearch, setLoadingSearch] = useState(false);
 
   const apiId = "45a279e4eb49922fc1c93e07d331e80a";
 
   function geoLocateUser(event) {
     if (navigator.geolocation) {
-      setLoading(true);
+      setLoadingGeo(true);
+      setLoadingSearch(false);
       setLocated(false);
       navigator.geolocation.getCurrentPosition(function (position) {
         setLatitude(position.coords.latitude);
@@ -36,7 +38,8 @@ export default function Search() {
       setCityname(data.data.name);
       setCurrentWeatherConditions(data.data);
       setLocated(true);
-      setLoading(false);
+      setLoadingGeo(false);
+      setLoadingSearch(false);
     });
   }
 
@@ -46,7 +49,8 @@ export default function Search() {
   }
 
   function searchUserCity(event) {
-    setLoading(true);
+    setLoadingGeo(false);
+    setLoadingSearch(true);
     setLocated(false);
     resolveGeolocationFromCityName(cityname);
   }
@@ -59,7 +63,8 @@ export default function Search() {
       setLongitude(data.data.coord.lon);
       setCurrentWeatherConditions(data.data);
       setLocated(true);
-      setLoading(false);
+      setLoadingGeo(false);
+      setLoadingSearch(false);
     });
   }
 
@@ -72,8 +77,8 @@ export default function Search() {
           onChange={updateCity}
         />
         <Button variant="outline-secondary" onClick={geoLocateUser}>
-          {!loading && <i className="bi bi-geo"></i>}
-          {loading && (
+          {!loadingGeo && <i className="bi bi-geo"></i>}
+          {loadingGeo && (
             <Spinner
               as="span"
               animation="border"
@@ -85,8 +90,8 @@ export default function Search() {
           <span className="visually-hidden">Loading...</span>
         </Button>
         <Button variant="outline-secondary" onClick={searchUserCity}>
-          {!loading && <i className="bi bi-search"></i>}
-          {loading && (
+          {!loadingSearch && <i className="bi bi-search"></i>}
+          {loadingSearch && (
             <Spinner
               as="span"
               animation="border"
