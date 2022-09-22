@@ -41,7 +41,7 @@ export default function TemperatureDetails(props) {
     setUnit(event.target.getAttribute("unit"));
   }
   function convertTempToSelectedUnit(value) {
-    if (unit == "°C") {
+    if (unit === "°C") {
       return Math.round(value);
     } else {
       return Math.round(value * (9 / 5) + 32);
