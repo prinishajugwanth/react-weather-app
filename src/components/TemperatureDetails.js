@@ -34,7 +34,7 @@ export default function TemperatureDetails(props) {
         const handleClick = () => setLoading(true);
 
         return (
-            <Button variant='primary' disabled={isLoading} onClick={!isLoading ? handleClick : null}>
+            <Button variant='outline-secondary' disabled={isLoading} onClick={!isLoading ? handleClick : null}>
                 {isLoading ? 'Loading...' : '5 day Forecast'}
             </Button>
         );

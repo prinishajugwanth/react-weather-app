@@ -136,10 +136,10 @@ export default function DailyForecast(props) {
                             <TemperatureItem description='Wind Speed' value={convertToKmph(speed)} unit='km/h' index={6}></TemperatureItem>
                         </ListGroup>
                         <Card.Body>
-                            <Button variant='secondary' className='mt-2 mx-2' onClick={renderInUnit} unit='°C'>
+                            <Button variant='outline-secondary' className='mt-2 mx-2' onClick={renderInUnit} unit='°C'>
                                 °C
                             </Button>
-                            <Button variant='secondary' className='mt-2 mx-2' onClick={renderInUnit} unit='°F'>
+                            <Button variant='outline-secondary' className='mt-2 mx-2' onClick={renderInUnit} unit='°F'>
                                 °F
                             </Button>
                         </Card.Body>

@@ -13,12 +13,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
     <React.StrictMode>
-        <div className='WeatherApp'>
+        <div className='WeatherApp mt-0'>
             <Stack gap={3}>
                 <header className='Header'>Weather Application</header>
                 <Search className='Search' />
-                <footer className='Footer text-muted'>
-                    <h6 className='mb-0 fw-lighter'>
+                <footer className='Footer'>
+                    <h6 className='mb-0 fw-normal'>
                         This page was designed by Prinisha Jugwanth and is an <a href='https://github.com/prinishajugwanth/react-weather-app'>open-source code</a>
                     </h6>
                 </footer>
